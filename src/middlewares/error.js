@@ -22,8 +22,16 @@ const responseMappers = {
     cause: validationsToCause(error.validations ?? []),
   }
 }),
-
-default:(error) => ({
+[ConflictError.name]: (error) => ({
+  status: 409,
+  body: {
+    statusCode:409,
+    error: ConflictError.name,
+    message: error.message,
+    cause: [],
+  }
+}), 
+ default:(error) => ({
   status: 500,
   body: {
    statusCode: 500,

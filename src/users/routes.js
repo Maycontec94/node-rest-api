@@ -21,14 +21,17 @@ const NotFound = {
   - D: delete
 */
 
+const NameRegex = /^[A-Z][a-z]+$/
+
 // ************
 // ** create **
 // ************
 const CreateUserSchema = {
   body: Joi.object({
     username: Joi.string().email().required(),
-    name: Joi.string().regex(/^[A-Za-z]+(\s?[A-Za-z])*$/).required(),
     password: Joi.string().min(5).max(40).required(),
+    firstName: Joi.string().regex(NameRegex).required(),
+    lastName: Joi.string().regex(NameRegex).required(),
   })
 
 }
@@ -50,9 +53,10 @@ router.post('/',validate(CreateUserSchema), withAsyncErrorHandler(createUser))
 
 const UpdateUserSchema = {
   body: Joi.object({
-    name: Joi.string().regex(/^[A-Za-z]+(\s?[A-Za-z])*$/).required(),
+    firstName: Joi.string().regex(NameRegex).required(),
+    lastName: Joi.string().regex(NameRegex).required(),
     password: Joi.string().min(5).max(40).required(),
-  }).or('name', 'password'),
+  }).or('firstName', 'lastName' ,  'password'),
   params: {
     id: Joi.number().required(),
   },
