@@ -53,9 +53,9 @@ router.post('/',validate(CreateUserSchema), withAsyncErrorHandler(createUser))
 
 const UpdateUserSchema = {
   body: Joi.object({
-    firstName: Joi.string().regex(NameRegex).required(),
-    lastName: Joi.string().regex(NameRegex).required(),
-    password: Joi.string().min(5).max(40).required(),
+    firstName: Joi.string().regex(NameRegex),
+    lastName: Joi.string().regex(NameRegex),
+    password: Joi.string().min(10).max(40),
   }).or('firstName', 'lastName' ,  'password'),
   params: {
     id: Joi.number().required(),
